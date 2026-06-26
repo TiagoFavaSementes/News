@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: #070b08; }
+@keyframes favaPulse { 0% { box-shadow: 0 0 0 0 rgba(6,191,52,.55); } 70% { box-shadow: 0 0 0 8px rgba(6,191,52,0); } 100% { box-shadow: 0 0 0 0 rgba(6,191,52,0); } }
+@keyframes favaGlow { 0%,100% { filter: drop-shadow(0 8px 26px rgba(6,191,52,.20)); } 50% { filter: drop-shadow(0 8px 38px rgba(6,191,52,.36)); } }
+</style>
+</helmet>
+<div style="position:relative; min-height:100vh; width:100%; overflow-x:hidden; font-family:'Hanken Grotesk',system-ui,sans-serif; color:#eaf5ec; background:radial-gradient(125% 80% at 50% -12%, rgba(3,115,31,.30), transparent 58%), radial-gradient(120% 75% at 50% 116%, rgba(3,89,24,.40), transparent 60%), linear-gradient(180deg,#0b110d 0%, #070b08 60%, #060907 100%);">
+
+  <canvas ref="{{ bgCanvas }}" style="position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;"></canvas>
+  <div style="position:fixed; inset:0; z-index:1; pointer-events:none; background:radial-gradient(58% 48% at 50% 36%, rgba(6,191,52,.06), transparent 70%);"></div>
+
+  <div style="position:relative; z-index:2; display:flex; flex-direction:column; min-height:100vh; max-width:1180px; margin:0 auto; padding:clamp(20px,3vw,32px) clamp(20px,5vw,56px) 34px;">
+
+    <header style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
+      <div style="display:inline-flex; align-items:center; gap:10px; padding:8px 15px; border-radius:999px; border:1px solid rgba(162,242,234,.16); background:rgba(162,242,234,.04); font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:.2em; color:#A2F2EA;">
+        <span style="width:7px; height:7px; border-radius:50%; background:#06BF34; animation:favaPulse 2.4s ease-out infinite;"></span>
+        PORTAL DE SISTEMAS
+      </div>
+      <sc-if value="{{ showClock }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:1px; font-family:'Space Grotesk',sans-serif;">
+          <span ref="{{ timeRef }}" style="font-size:15px; font-weight:600; color:#eef7f0; letter-spacing:.05em; font-variant-numeric:tabular-nums;">--:--</span>
+          <span ref="{{ dateRef }}" style="font-size:11px; color:rgba(206,228,216,.5); letter-spacing:.04em;">—</span>
+        </div>
+      </sc-if>
+    </header>
+
+    <main style="flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; padding-top:clamp(34px,7vh,78px);">
+      <img src="assets/logo-fava.png" alt="Fava Sementes" draggable="false" style="width:clamp(186px,25vw,288px); height:auto; user-select:none; animation:favaGlow 5.5s ease-in-out infinite;">
+
+      <div style="margin-top:clamp(26px,4vw,40px); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; letter-spacing:.24em; color:#A2F2EA; opacity:.82;">CENTRAL DE ACESSOS</div>
+
+      <h1 style="margin:clamp(12px,1.6vw,16px) 0 0; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(34px,6vw,58px); line-height:1.03; letter-spacing:-.02em; color:#f4fbf6;">Controle <span style="background:linear-gradient(100deg,#06BF34,#A2F2EA); -webkit-background-clip:text; background-clip:text; color:transparent;">Agrícola</span></h1>
+
+      <p style="margin:clamp(16px,2.2vw,22px) auto 0; max-width:566px; font-size:clamp(15px,1.6vw,17.5px); line-height:1.62; color:rgba(210,232,220,.66);">Acesso rápido e centralizado aos sistemas de gestão e operação da Fava Sementes — combustível, grãos e controle agrícola.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px; width:100%; max-width:884px; margin:clamp(38px,5vw,60px) auto 0;">
+
+        <a href="https://favasementes.com.br/" target="_blank" rel="noopener noreferrer" style="position:relative; display:flex; flex-direction:column; gap:18px; padding:28px 28px 24px; min-height:206px; border-radius:20px; text-align:left; text-decoration:none; color:inherit; overflow:hidden; background:linear-gradient(160deg, rgba(3,89,24,.34), rgba(13,13,13,.52)); border:1px solid rgba(162,242,234,.13); box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -28px rgba(0,0,0,.9); transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s, background .5s; --ao:.5; --ax:-5px; --ib:rgba(162,242,234,.08); --ic:#A2F2EA; --isc:1; --tl:0;" style-hover="transform:translateY(-8px); border-color:rgba(6,191,52,.5); box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 26px 55px -26px rgba(6,191,52,.5); background:linear-gradient(160deg, rgba(6,191,52,.17), rgba(13,13,13,.55)); --ao:1; --ax:0px; --ib:rgba(6,191,52,.22); --ic:#06BF34; --isc:1.05; --tl:1;">
+          <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, #06BF34 35%, #A2F2EA 65%, transparent); transform:scaleX(var(--tl)); transform-origin:left center; transition:transform .55s cubic-bezier(.2,.8,.2,1);"></div>
+          <span style="position:absolute; top:24px; right:26px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:500; letter-spacing:.12em; color:rgba(162,242,234,.34);">01</span>
+          <div style="display:flex; align-items:center; justify-content:center; width:56px; height:56px; border-radius:15px; border:1px solid rgba(162,242,234,.1); background:var(--ib); color:var(--ic); transform:scale(var(--isc)); transition:background .45s, color .45s, transform .45s;">
+            <i data-lucide="globe" width="26" height="26" stroke-width="1.7" style="display:block;"></i>
+          </div>
+          <div>
+            <h3 style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:600; letter-spacing:-.01em; line-height:1.25; color:#f3fbf5;">Site Fava Sementes</h3>
+            <sc-if value="{{ showDescriptions }}" hint-placeholder-val="{{ true }}"><p style="margin:8px 0 0; font-size:14px; line-height:1.55; color:rgba(210,232,220,.6); max-width:38ch;">Página institucional e catálogo de produtos da Fava Sementes.</p></sc-if>
+          </div>
+          <div style="display:flex; align-items:center; gap:7px; margin-top:auto; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; letter-spacing:.02em; color:#A2F2EA; opacity:var(--ao); transform:translateX(var(--ax)); transition:opacity .45s, transform .45s;">
+            Acessar <i data-lucide="arrow-up-right" width="16" height="16" stroke-width="2" style="display:block;"></i>
+          </div>
+        </a>
+
+        <a href="https://tiagofavasementes.github.io/Controle-de-Recebimento-de-Combustivel/" target="_blank" rel="noopener noreferrer" style="position:relative; display:flex; flex-direction:column; gap:18px; padding:28px 28px 24px; min-height:206px; border-radius:20px; text-align:left; text-decoration:none; color:inherit; overflow:hidden; background:linear-gradient(160deg, rgba(3,89,24,.34), rgba(13,13,13,.52)); border:1px solid rgba(162,242,234,.13); box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -28px rgba(0,0,0,.9); transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s, background .5s; --ao:.5; --ax:-5px; --ib:rgba(162,242,234,.08); --ic:#A2F2EA; --isc:1; --tl:0;" style-hover="transform:translateY(-8px); border-color:rgba(6,191,52,.5); box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 26px 55px -26px rgba(6,191,52,.5); background:linear-gradient(160deg, rgba(6,191,52,.17), rgba(13,13,13,.55)); --ao:1; --ax:0px; --ib:rgba(6,191,52,.22); --ic:#06BF34; --isc:1.05; --tl:1;">
+          <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, #06BF34 35%, #A2F2EA 65%, transparent); transform:scaleX(var(--tl)); transform-origin:left center; transition:transform .55s cubic-bezier(.2,.8,.2,1);"></div>
+          <span style="position:absolute; top:24px; right:26px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:500; letter-spacing:.12em; color:rgba(162,242,234,.34);">02</span>
+          <div style="display:flex; align-items:center; justify-content:center; width:56px; height:56px; border-radius:15px; border:1px solid rgba(162,242,234,.1); background:var(--ib); color:var(--ic); transform:scale(var(--isc)); transition:background .45s, color .45s, transform .45s;">
+            <i data-lucide="fuel" width="26" height="26" stroke-width="1.7" style="display:block;"></i>
+          </div>
+          <div>
+            <h3 style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:600; letter-spacing:-.01em; line-height:1.25; color:#f3fbf5;">Controle de Recebimento de Combustível</h3>
+            <sc-if value="{{ showDescriptions }}" hint-placeholder-val="{{ true }}"><p style="margin:8px 0 0; font-size:14px; line-height:1.55; color:rgba(210,232,220,.6); max-width:38ch;">Registro e acompanhamento das entradas de combustível na unidade.</p></sc-if>
+          </div>
+          <div style="display:flex; align-items:center; gap:7px; margin-top:auto; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; letter-spacing:.02em; color:#A2F2EA; opacity:var(--ao); transform:translateX(var(--ax)); transition:opacity .45s, transform .45s;">
+            Acessar <i data-lucide="arrow-up-right" width="16" height="16" stroke-width="2" style="display:block;"></i>
+          </div>
+        </a>
+
+        <a href="https://tiagofavasementes.github.io/contagem-diaria-mensal-graos/" target="_blank" rel="noopener noreferrer" style="position:relative; display:flex; flex-direction:column; gap:18px; padding:28px 28px 24px; min-height:206px; border-radius:20px; text-align:left; text-decoration:none; color:inherit; overflow:hidden; background:linear-gradient(160deg, rgba(3,89,24,.34), rgba(13,13,13,.52)); border:1px solid rgba(162,242,234,.13); box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -28px rgba(0,0,0,.9); transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s, background .5s; --ao:.5; --ax:-5px; --ib:rgba(162,242,234,.08); --ic:#A2F2EA; --isc:1; --tl:0;" style-hover="transform:translateY(-8px); border-color:rgba(6,191,52,.5); box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 26px 55px -26px rgba(6,191,52,.5); background:linear-gradient(160deg, rgba(6,191,52,.17), rgba(13,13,13,.55)); --ao:1; --ax:0px; --ib:rgba(6,191,52,.22); --ic:#06BF34; --isc:1.05; --tl:1;">
+          <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, #06BF34 35%, #A2F2EA 65%, transparent); transform:scaleX(var(--tl)); transform-origin:left center; transition:transform .55s cubic-bezier(.2,.8,.2,1);"></div>
+          <span style="position:absolute; top:24px; right:26px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:500; letter-spacing:.12em; color:rgba(162,242,234,.34);">03</span>
+          <div style="display:flex; align-items:center; justify-content:center; width:56px; height:56px; border-radius:15px; border:1px solid rgba(162,242,234,.1); background:var(--ib); color:var(--ic); transform:scale(var(--isc)); transition:background .45s, color .45s, transform .45s;">
+            <i data-lucide="wheat" width="26" height="26" stroke-width="1.7" style="display:block;"></i>
+          </div>
+          <div>
+            <h3 style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:600; letter-spacing:-.01em; line-height:1.25; color:#f3fbf5;">Contagem Diária/Mensal de Grãos</h3>
+            <sc-if value="{{ showDescriptions }}" hint-placeholder-val="{{ true }}"><p style="margin:8px 0 0; font-size:14px; line-height:1.55; color:rgba(210,232,220,.6); max-width:38ch;">Controle da contagem de grãos por dia e o fechamento mensal.</p></sc-if>
+          </div>
+          <div style="display:flex; align-items:center; gap:7px; margin-top:auto; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; letter-spacing:.02em; color:#A2F2EA; opacity:var(--ao); transform:translateX(var(--ax)); transition:opacity .45s, transform .45s;">
+            Acessar <i data-lucide="arrow-up-right" width="16" height="16" stroke-width="2" style="display:block;"></i>
+          </div>
+        </a>
+
+        <a href="https://tiagofavasementes.github.io/combustivel-fluxo-diario/" target="_blank" rel="noopener noreferrer" style="position:relative; display:flex; flex-direction:column; gap:18px; padding:28px 28px 24px; min-height:206px; border-radius:20px; text-align:left; text-decoration:none; color:inherit; overflow:hidden; background:linear-gradient(160deg, rgba(3,89,24,.34), rgba(13,13,13,.52)); border:1px solid rgba(162,242,234,.13); box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -28px rgba(0,0,0,.9); transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s, background .5s; --ao:.5; --ax:-5px; --ib:rgba(162,242,234,.08); --ic:#A2F2EA; --isc:1; --tl:0;" style-hover="transform:translateY(-8px); border-color:rgba(6,191,52,.5); box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 26px 55px -26px rgba(6,191,52,.5); background:linear-gradient(160deg, rgba(6,191,52,.17), rgba(13,13,13,.55)); --ao:1; --ax:0px; --ib:rgba(6,191,52,.22); --ic:#06BF34; --isc:1.05; --tl:1;">
+          <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, #06BF34 35%, #A2F2EA 65%, transparent); transform:scaleX(var(--tl)); transform-origin:left center; transition:transform .55s cubic-bezier(.2,.8,.2,1);"></div>
+          <span style="position:absolute; top:24px; right:26px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:500; letter-spacing:.12em; color:rgba(162,242,234,.34);">04</span>
+          <div style="display:flex; align-items:center; justify-content:center; width:56px; height:56px; border-radius:15px; border:1px solid rgba(162,242,234,.1); background:var(--ib); color:var(--ic); transform:scale(var(--isc)); transition:background .45s, color .45s, transform .45s;">
+            <i data-lucide="gauge" width="26" height="26" stroke-width="1.7" style="display:block;"></i>
+          </div>
+          <div>
+            <h3 style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:600; letter-spacing:-.01em; line-height:1.25; color:#f3fbf5;">Combustível — Fluxo Diário</h3>
+            <sc-if value="{{ showDescriptions }}" hint-placeholder-val="{{ true }}"><p style="margin:8px 0 0; font-size:14px; line-height:1.55; color:rgba(210,232,220,.6); max-width:38ch;">Monitoramento do consumo e do fluxo diário de combustível.</p></sc-if>
+          </div>
+          <div style="display:flex; align-items:center; gap:7px; margin-top:auto; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; letter-spacing:.02em; color:#A2F2EA; opacity:var(--ao); transform:translateX(var(--ax)); transition:opacity .45s, transform .45s;">
+            Acessar <i data-lucide="arrow-up-right" width="16" height="16" stroke-width="2" style="display:block;"></i>
+          </div>
+        </a>
+
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:center; gap:9px; width:100%; max-width:884px; margin:clamp(18px,2.6vw,26px) auto 0; padding:15px; border-radius:16px; border:1px dashed rgba(162,242,234,.16); background:rgba(162,242,234,.025); color:rgba(206,228,216,.5); font-size:13px; letter-spacing:.01em;">
+        <i data-lucide="plus" width="15" height="15" stroke-width="2" style="display:block;"></i>
+        Novos sistemas serão adicionados em breve
+      </div>
+    </main>
+
+    <footer style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-top:clamp(40px,7vw,68px); padding-top:20px; border-top:1px solid rgba(162,242,234,.08); font-size:12px; color:rgba(206,228,216,.42);">
+      <span>© 2026 Fava Sementes · Todos os direitos reservados</span>
+      <span>Controle Agrícola · Acesso interno e institucional</span>
+    </footer>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;bgMotion&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;Brotos crescendo&quot;, &quot;options&quot;: [&quot;Brotos crescendo&quot;, &quot;Partículas&quot;, &quot;Misto&quot;, &quot;Desligado&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Fundo animado&quot; },
+  &quot;bgIntensity&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0.6, &quot;min&quot;: 0.2, &quot;max&quot;: 1, &quot;step&quot;: 0.05, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Fundo animado&quot; },
+  &quot;showClock&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Conteúdo&quot; },
+  &quot;showDescriptions&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Conteúdo&quot; }
+}">
+class Component extends DCLogic {
+  bgCanvas = React.createRef();
+  timeRef = React.createRef();
+  dateRef = React.createRef();
+
+  renderVals() {
+    return {
+      bgCanvas: this.bgCanvas,
+      timeRef: this.timeRef,
+      dateRef: this.dateRef,
+      showClock: this.props.showClock ?? true,
+      showDescriptions: this.props.showDescriptions ?? true,
+    };
+  }
+
+  componentDidMount() {
+    this._initIcons();
+    this._startClock();
+    this._setupBg();
+    this._onResize = () => this._resizeBg();
+    window.addEventListener('resize', this._onResize);
+  }
+
+  componentDidUpdate(prev) {
+    if (prev.bgMotion !== this.props.bgMotion || prev.bgIntensity !== this.props.bgIntensity) {
+      this._buildScene();
+      this._maybeRun();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._clock) clearInterval(this._clock);
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
+  }
+
+  _initIcons() {
+    const tryIt = () => {
+      if (window.lucide && window.lucide.createIcons) { try { window.lucide.createIcons(); } catch (e) {} }
+      else { setTimeout(tryIt, 60); }
+    };
+    tryIt();
+  }
+
+  _startClock() {
+    const cap = (s) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+    const upd = () => {
+      const now = new Date();
+      const t = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const wd = now.toLocaleDateString('pt-BR', { weekday: 'short' }).replace(/\.$/, '');
+      const mon = now.toLocaleDateString('pt-BR', { month: 'short' }).replace(/\.$/, '');
+      const d = cap(wd) + ' · ' + now.getDate() + ' ' + mon;
+      if (this.timeRef.current) this.timeRef.current.textContent = t;
+      if (this.dateRef.current) this.dateRef.current.textContent = d;
+    };
+    upd();
+    this._clock = setInterval(upd, 15000);
+  }
+
+  _bgParams() {
+    const motion = this.props.bgMotion || 'Brotos crescendo';
+    let it = this.props.bgIntensity;
+    it = (it == null ? 0.6 : Number(it));
+    if (isNaN(it)) it = 0.6;
+    it = Math.max(0.15, Math.min(1, it));
+    const off = motion === 'Desligado';
+    const plants = motion === 'Brotos crescendo' || motion === 'Misto';
+    const particles = !off;
+    return { motion, it, off, plants, particles };
+  }
+
+  _setupBg() {
+    const cv = this.bgCanvas.current;
+    if (!cv) return;
+    this._ctx = cv.getContext('2d');
+    this._reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this._resizeBg();
+    this._maybeRun();
+  }
+
+  _resizeBg() {
+    const cv = this.bgCanvas.current;
+    if (!cv || !this._ctx) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = window.innerWidth, h = window.innerHeight;
+    this._w = w; this._h = h; this._dpr = dpr;
+    cv.width = Math.floor(w * dpr);
+    cv.height = Math.floor(h * dpr);
+    this._ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this._buildScene();
+    if (this._reduced) this._drawStatic();
+  }
+
+  _rnd(a, b) { return a + Math.random() * (b - a); }
+
+  _buildScene() {
+    const p = this._bgParams();
+    const w = this._w || 1200, h = this._h || 800;
+    this._plants = [];
+    if (p.plants) {
+      const n = Math.round(6 + p.it * 7);
+      for (let i = 0; i < n; i++) this._plants.push(this._makePlant(w, h, true));
+    }
+    this._parts = [];
+    if (p.particles) {
+      const base = p.motion === 'Partículas' ? 30 : (p.motion === 'Misto' ? 22 : 14);
+      const n = Math.round(base * (0.5 + p.it));
+      for (let i = 0; i < n; i++) {
+        this._parts.push({
+          x: this._rnd(0, w), y: this._rnd(0, h), vy: this._rnd(7, 20), size: this._rnd(0.8, 2.2),
+          ph: this._rnd(0, Math.PI * 2), ds: this._rnd(0.3, 0.9), da: this._rnd(6, 16), a: this._rnd(0.3, 1)
+        });
+      }
+    }
+    this._params = p;
+  }
+
+  _makePlant(w, h, stagger) {
+    const grow = this._rnd(5, 9), hold = this._rnd(4, 8), fade = this._rnd(3, 5);
+    const total = grow + hold + fade;
+    const leaves = [];
+    const lc = Math.round(this._rnd(2, 4));
+    for (let i = 0; i < lc; i++) {
+      leaves.push({ t: this._rnd(0.32, 0.92), side: Math.random() < 0.5 ? -1 : 1, size: this._rnd(7, 15), ang: this._rnd(-0.5, 0.5) });
+    }
+    return {
+      x: this._rnd(w * 0.02, w * 0.98),
+      height: Math.min(h * this._rnd(0.16, 0.32), 190),
+      bend: this._rnd(-26, 26),
+      sway: this._rnd(5, 14),
+      swaySpeed: this._rnd(0.25, 0.6),
+      swayPhase: this._rnd(0, Math.PI * 2),
+      width: this._rnd(1.1, 2.1),
+      grow, hold, fade, total,
+      age: stagger ? this._rnd(0, total) : this._rnd(-2.5, 0),
+      leaves
+    };
+  }
+
+  _maybeRun() {
+    if (this._raf) { cancelAnimationFrame(this._raf); this._raf = null; }
+    const p = this._params || this._bgParams();
+    if (p.off) { if (this._ctx) this._ctx.clearRect(0, 0, this._w, this._h); return; }
+    if (this._reduced) { this._drawStatic(); return; }
+    this._last = performance.now();
+    const loop = (now) => {
+      const dt = Math.min(0.05, (now - this._last) / 1000);
+      this._last = now;
+      this._frame(dt, now / 1000);
+      this._raf = requestAnimationFrame(loop);
+    };
+    this._raf = requestAnimationFrame(loop);
+  }
+
+  _easeOut(x) { return 1 - Math.pow(1 - x, 3); }
+
+  _frame(dt, time) {
+    const ctx = this._ctx; if (!ctx) return;
+    const w = this._w, h = this._h, p = this._params;
+    ctx.clearRect(0, 0, w, h);
+
+    if (this._parts) {
+      for (const pt of this._parts) {
+        pt.y -= pt.vy * dt;
+        pt.x += Math.sin(time * pt.ds + pt.ph) * pt.da * dt;
+        if (pt.y < -8) { pt.y = h + 8; pt.x = Math.random() * w; }
+        const fy = Math.max(0, Math.min(1, pt.y / h));
+        const edge = Math.min(fy, 1 - fy) * 2;
+        const a = pt.a * (0.25 + 0.75 * edge) * p.it * 0.5;
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, pt.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(162,242,234,' + a.toFixed(3) + ')';
+        ctx.fill();
+      }
+    }
+
+    if (this._plants) {
+      for (const pl of this._plants) {
+        pl.age += dt;
+        if (pl.age >= pl.total) { Object.assign(pl, this._makePlant(w, h, false)); continue; }
+        if (pl.age < 0) continue;
+        let g, alpha;
+        const baseA = p.it * 0.22;
+        if (pl.age < pl.grow) { g = this._easeOut(pl.age / pl.grow); alpha = Math.min(1, pl.age / 0.9) * baseA; }
+        else if (pl.age < pl.grow + pl.hold) { g = 1; alpha = baseA; }
+        else { g = 1; alpha = baseA * (1 - (pl.age - pl.grow - pl.hold) / pl.fade); }
+        if (g <= 0.001 || alpha <= 0.001) continue;
+        this._drawPlant(ctx, pl, g, alpha, time);
+      }
+    }
+  }
+
+  _drawPlant(ctx, pl, g, alpha, time) {
+    const h = this._h;
+    const baseY = h;
+    const swayX = Math.sin(time * pl.swaySpeed + pl.swayPhase) * pl.sway * g;
+    const tipX = pl.x + pl.bend * g + swayX;
+    const tipY = h - pl.height * g;
+    const midX = pl.x + (pl.bend * 0.35 + swayX * 0.5) * g;
+    const midY = (baseY + tipY) / 2;
+    ctx.beginPath();
+    ctx.moveTo(pl.x, baseY);
+    ctx.quadraticCurveTo(midX, midY, tipX, tipY);
+    ctx.strokeStyle = 'rgba(110,205,140,' + alpha.toFixed(3) + ')';
+    ctx.lineWidth = pl.width;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    for (const lf of pl.leaves) {
+      if (g <= lf.t) continue;
+      const lg = Math.min(1, (g - lf.t) / 0.22);
+      const u = Math.min(1, lf.t / g);
+      const px = (1 - u) * (1 - u) * pl.x + 2 * (1 - u) * u * midX + u * u * tipX;
+      const py = (1 - u) * (1 - u) * baseY + 2 * (1 - u) * u * midY + u * u * tipY;
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(lf.ang + lf.side * 0.5 + Math.sin(time * pl.swaySpeed + pl.swayPhase) * 0.08);
+      ctx.beginPath();
+      ctx.ellipse(lf.side * lf.size * 0.5 * lg, 0, lf.size * lg, lf.size * 0.5 * lg, 0, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(70,195,105,' + (alpha * 0.85).toFixed(3) + ')';
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.beginPath();
+    ctx.arc(tipX, tipY, Math.max(1, pl.width * 0.9), 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(162,242,234,' + (alpha * 1.1).toFixed(3) + ')';
+    ctx.fill();
+  }
+
+  _drawStatic() {
+    const ctx = this._ctx; if (!ctx) return;
+    const w = this._w, h = this._h, p = this._params || this._bgParams();
+    ctx.clearRect(0, 0, w, h);
+    if (p.off) return;
+    if (this._plants) for (const pl of this._plants) this._drawPlant(ctx, pl, 1, p.it * 0.18, 0);
+    if (this._parts) for (const pt of this._parts) {
+      ctx.beginPath(); ctx.arc(pt.x, pt.y, pt.size, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(162,242,234,' + (pt.a * p.it * 0.25).toFixed(3) + ')'; ctx.fill();
+    }
+  }
+}
+</script>
+</body>
+</html>
